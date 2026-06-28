@@ -1,0 +1,16 @@
+{
+  "name": "subject-ai-backend",
+  "version": "1.0.0",
+  "description": "高中学科知识 AI 网站后端（第 9 节 Mock AI MVP）",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
