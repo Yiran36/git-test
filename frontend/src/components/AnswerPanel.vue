@@ -39,5 +39,9 @@ defineProps({
     <div class="answer-block reminder">
       <strong>提醒：</strong>{{ result.answer.reminder }}
     </div>
+
+    <p v-if="result.answer.disclaimer" class="disclaimer">
+      ⚠️ {{ result.answer.disclaimer }}
+    </p>
   </section>
 </template>

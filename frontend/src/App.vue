@@ -77,7 +77,7 @@ onMounted(() => {
 <template>
   <header class="header">
     <h1>高中学科知识 AI 助手</h1>
-    <p class="subtitle">第 9 节 MVP · Mock AI 演示（第 10 节将接入 DeepSeek）</p>
+    <p class="subtitle">数学 · 英语 · 物理 · DeepSeek AI 答疑</p>
   </header>
 
   <main class="container">

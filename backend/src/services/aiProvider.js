@@ -5,9 +5,11 @@
  */
 const mockAi = require('./mockAi');
 
+const deepSeekService = require('./deepSeekService');
+
 const PROVIDERS = {
   mock: mockAi,
-  // deepseek: require('./deepseekAi'),  // 第 10 节实现
+  deepseek: deepSeekService,
 };
 
 function getProvider() {

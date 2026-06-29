@@ -49,7 +49,7 @@ function onSubmit() {
         />
       </div>
       <button type="submit" :disabled="loading">
-        {{ loading ? '提交中…' : '提交问题' }}
+        {{ loading ? 'AI 正在思考…' : '提交问题' }}
       </button>
       <p v-if="error" class="error">{{ error }}</p>
     </form>

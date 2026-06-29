@@ -2,6 +2,7 @@ const express = require('express');
 const subjectRepo = require('../repositories/subjectRepo');
 const qaRecordRepo = require('../repositories/qaRecordRepo');
 const { generateAnswer, getSourceLabel } = require('../services/aiProvider');
+const { generateDeepSeekAnswer } = require('../services/deepSeekService');
 
 const router = express.Router();
 
@@ -29,7 +30,27 @@ router.post('/', async (req, res, next) => {
       return res.status(400).json({ error: 'invalid subject code' });
     }
 
-    const answer = await generateAnswer({ subject, grade, question: trimmedQuestion });
+    const useDeepSeek = process.env.AI_PROVIDER === 'deepseek';
+    let answer;
+
+    try {
+      answer = useDeepSeek
+        ? await generateDeepSeekAnswer({ subject, grade, question: trimmedQuestion })
+        : await generateAnswer({ subject, grade, question: trimmedQuestion });
+    } catch (err) {
+      if (err.code === 'CONFIG_ERROR') {
+        return res.status(503).json({ error: 'DeepSeek API key not configured' });
+      }
+      if (err.code === 'PARSE_ERROR') {
+        return res.status(502).json({ error: 'AI response parse failed' });
+      }
+      if (useDeepSeek) {
+        console.error('DeepSeek error:', err.message);
+        return res.status(502).json({ error: 'DeepSeek API request failed' });
+      }
+      throw err;
+    }
+
     const source = getSourceLabel();
 
     const id = await qaRecordRepo.insert({
